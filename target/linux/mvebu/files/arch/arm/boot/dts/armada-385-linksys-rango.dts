@@ -140,6 +140,9 @@
 			ethernet@70000 {
 				status = "okay";
 				phy-mode = "rgmii-id";
+				buffer-manager = <&bm>;
+				bm,pool-long = <0>;
+				bm,pool-short = <3>;
 				fixed-link {
 					speed = <1000>;
 					full-duplex;
@@ -149,6 +152,9 @@
 			ethernet@34000 {
 				status = "okay";
 				phy-mode = "sgmii";
+				buffer-manager = <&bm>;
+				bm,pool-long = <2>;
+				bm,pool-short = <3>;
 				fixed-link {
 					speed = <1000>;
 					full-duplex;
@@ -159,7 +165,21 @@
 				status = "okay";
 			};
 
+			bm@c8000 {
+				status = "okay";
+			};
+
 			sata@a8000 {
+				status = "okay";
+			};
+
+			sdhci@d8000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&sdhci_pins>;
+				no-1-8-v;
+				broken-cd;
+				wp-inverted;
+				bus-width = <8>;
 				status = "okay";
 			};
 
@@ -251,6 +271,10 @@
 			};
 		};
 
+		bm-bppi {
+			status = "okay";
+		};
+
 		pcie-controller {
 			status = "okay";
 
@@ -320,7 +344,7 @@
 		pinctrl-names = "default";
 
 		power {
-			gpios = <&gpio1 25 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio1 24 GPIO_ACTIVE_HIGH>;
 			default-state = "on";
 		};
 
